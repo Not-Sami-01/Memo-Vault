@@ -37,7 +37,7 @@ Ensure you have one of the following package managers installed:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/memovault.git
+    git clone https://github.com/Not-Sami-01/Memo-Vault.git
     ```
 
 2. Navigate into the project directory:
