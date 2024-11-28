@@ -1,5 +1,5 @@
 {
-  "name": "altriva-app",
+  "name": "memo-vault",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,16 +9,29 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-react": "^9.3.1",
+    "@next/env": "^15.0.2",
+    "@types/md5": "^2.3.5",
+    "ckeditor5": "^43.3.0",
+    "jsonwebtoken": "^9.0.2",
+    "md5": "^2.3.0",
+    "mongoose": "^8.8.0",
+    "mongoose-delete": "^1.0.2",
+    "next": "15.0.2",
     "react": "19.0.0-rc-02c0e824-20241028",
     "react-dom": "19.0.0-rc-02c0e824-20241028",
-    "next": "15.0.2"
+    "react-idle-timer": "^5.7.2",
+    "react-infinite-scroll-component": "^6.1.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@glidejs/glide": "^3.6.2",
+    "@types/crypto-js": "^4.2.2",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "postcss": "^8",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
   }
 }

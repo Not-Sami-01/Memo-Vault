@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: 'class', // Enables dark mode using a class
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,9 +12,15 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        // Define dark mode colors
+        dark: {
+          background: "var(--dark-background)", // Set your dark background variable
+          foreground: "var(--dark-foreground)", // Set your dark foreground variable
+        },
       },
     },
   },
   plugins: [],
 };
+
 export default config;
