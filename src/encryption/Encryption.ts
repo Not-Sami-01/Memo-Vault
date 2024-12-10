@@ -46,7 +46,6 @@ import { randomBytes } from 'crypto';
 
 export async function MyEncrypt(plaintext: string, password: string) {
   if (plaintext === '') return plaintext;
-
   const ptUtf8 = new TextEncoder().encode(plaintext);
   const pwUtf8 = new TextEncoder().encode(password);
   const pwHash = await (isBrowser ? window.crypto.subtle : crypto.subtle).digest('SHA-256', pwUtf8);
@@ -91,7 +90,6 @@ export async function MyEncrypt(plaintext: string, password: string) {
 // }
 export async function MyDecrypt(ciphertext: string, password: string) {
   if (ciphertext === '') return ciphertext;
-
   const ivHex = ciphertext.slice(0, 32);
   const ctBase64 = ciphertext.slice(32);
 

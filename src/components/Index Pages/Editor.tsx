@@ -45,22 +45,16 @@ type ImportData = {
   content: string;
   setContent: React.Dispatch<React.SetStateAction<string>>;
   handleSave: ()=> void;
+  autoSave: boolean;
 }
 
-export default function Editor({ editorKey, className, currentEntry, setCurrentEntry, content, setContent, handleSave }: ImportData) {
-  const [isLayoutReady, setIsLayoutReady] = useState(false);
+export default function Editor({ editorKey, className, currentEntry, setCurrentEntry, content, setContent, handleSave, autoSave }: ImportData) {
   const [val, setVal] = useState(0);
   const handleChange = (event: any, editor: any) => {
     const data = editor.getData();
     setContent(data);
     setVal(val+1);
   };
-
-  useEffect(() => {
-    setIsLayoutReady(true);
-    return () => setIsLayoutReady(false);
-  }, []);
-
   const editorConfig = {
     toolbar: {
       items: [
@@ -228,15 +222,17 @@ export default function Editor({ editorKey, className, currentEntry, setCurrentE
   };
   useEffect(()=> {
     if(val >= 10){
-      handleSave();
+      if(autoSave){
+        handleSave();
+      }
       setVal(0);
     }
-  }, [val])
+  }, [val]);
   return (
     <>
       <div className={'editor-container ' + className}>
         <CKEditor
-          key={editorKey}
+          key={editorKey +'This is a key '}
           editor={ClassicEditor}
           data={content}
           onChange={handleChange}

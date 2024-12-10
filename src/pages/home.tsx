@@ -1,9 +1,7 @@
-import Footer from "@/components/Footer";
-import Carousel from "@/components/Carousel";
-import Signin from "@/components/Signin";
-import Head from "next/head"
-import Header from "@/components/Header";
-import Services from "@/components/Services";
+import Footer from "@/components/Other/Footer";
+import Carousel from "@/components/Home/Carousel";
+import Header from "@/components/Other/Header";
+import Services from "@/components/Home/Services";
 import Link from "next/link";
 export default function Home() {
   const GetStartedButton = () => {

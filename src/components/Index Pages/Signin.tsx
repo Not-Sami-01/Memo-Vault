@@ -2,11 +2,12 @@ import { AlertType, LoginInfoType } from '@/pages'
 import md5 from 'md5'
 import Link from 'next/link'
 import React from 'react'
+import FullPageLoading from '../Other/FullPageLoading'
 
 type ImportDataType = {
   myAlert: AlertType;
   setMyAlert: any;
-  setLoginInfo: any;
+  setLoginInfo: React.Dispatch<React.SetStateAction<LoginInfoType>>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -33,9 +34,9 @@ const Signin = ({ myAlert, setMyAlert, setLoginInfo, loading, setLoading }: Impo
         const response = await data.json();
         setMyAlert({ success: response.success, message: response.message, showAlert: true });
         if (response.success) {
-          setLoginInfo({ loggedIn: true, token: response.token, username: response.username, currentPage: 'entries' });
+          setLoginInfo({ loggedIn: true, token: response.token, username: response.username, currentPage: 'entries', totalEntries: response.totalEntries,trashedEntries: response.trashedEntries, joinedAt: response.joinedAt});
         } else {
-          setLoginInfo({ loggedIn: false, token: '', username: '' });
+          setLoginInfo(prev => {return {...prev, loggedIn: false, token: '', username: '', totalEntries: null, joinedAt: null, trashedEntries: null }});
         }
       } catch (error) {
         setMyAlert({ success: false, showAlert: true, message: 'Some technical error occured' })

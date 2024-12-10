@@ -21,7 +21,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>):
       const offset = (page - 1) * limit;
       const entries: EntryType[] = await Entries.find({user_id: userId, deleted_at: { $ne: null }}).skip(offset).limit(limit).sort({entry_date_time: order});
       const totalLength: number = await Entries.countDocuments({user_id: userId, deleted_at: { $ne: null }});
-      return res.status(200).json({ success: true, message: "Successfully fetched all the entries",  entries, totalLength });
+      return res.status(200).json({ success: true, message: "Deleted entries fetched successfully",  entries, totalLength });
     } else {
       return res.status(400).json({ success: false, error: "Bad Request", message: 'This route only supports POST method' });
     }

@@ -2,8 +2,9 @@ import { LoginInfoType } from '@/pages'
 import { EntryType } from '@/pages/api/Models/EntrySchema';
 import React from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
-import Helpers from './CompareDate';
+import Helpers from '../CompareDate';
 import ExportDataModal from './ExportDataModal';
+import { formatToCustomDateFormat } from '@/pages/helpers/helper';
 type ImportDataType = {
   loginInfo: LoginInfoType,
   entries: EntryType[],
@@ -46,7 +47,6 @@ function Entries({ loginInfo,
   setAllEntries,
   refreshEntries,
   softDeleteEntry,
-  clearLoginInfo,
   setRecyclebin,
   recyclebin,
   restoreDeletedEntry,
@@ -70,24 +70,7 @@ function Entries({ loginInfo,
     const newString = string.replace(/<p>&nbsp;<\/p>/g, '');
     return newString;
   }
-  function formatToCustomDateFormat(givenDate: string) {
-    const date: Date = new Date(givenDate);
-    const months = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ];
-    const day = date.getDate();
-    const month = months[date.getMonth()];
-    const year = date.getFullYear();
-    let hours = date.getHours();
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
-    const ampm = hours >= 12 ? 'pm' : 'am';
-    hours = hours % 12;
-    hours = hours ? hours : 12;
-    return `${month} ${day}, ${year} ${hours}:${minutes}:${seconds} ${ampm.toUpperCase()}`;
-    // return `${hours}:${minutes}:${seconds} ${ampm.toUpperCase()} ${month} ${day}, ${year} `;
-  }
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setSearch(e.target.value);
@@ -137,7 +120,7 @@ function Entries({ loginInfo,
     else
       return "";
   }
-  const buttonClass = 'ml-1 bg-slate-500 shadow rounded p-1 py-1.5 h-max text-sm sm:text-xs md:text-sm select-none dark:bg-black border dark:active:bg-slate-800 active:bg-slate-600';
+  const buttonClass = 'cursor-pointer ml-1 bg-slate-500 shadow rounded p-1 py-1.5 h-max text-sm sm:text-xs md:text-sm select-none dark:bg-black border dark:active:bg-slate-600 active:bg-slate-600';
 
   // Loading components
   const LoadingSpinner = () => {
@@ -173,7 +156,7 @@ function Entries({ loginInfo,
     return `${month} ${year}`;
   }
   return (
-    <div>
+    <div className='min-h-screen'>
       <ExportDataModal
         modal={exportModal}
         setModal={setExportModal}
@@ -249,15 +232,11 @@ function Entries({ loginInfo,
           {searchedEntries && search.length !== 0 && <h2 className='text-xl mt-3'>Results of search: "{search}", Click <button className="underline active:text-purple-500" onClick={refreshEntries}>Refresh</button> to clear search filter</h2>}
           {recyclebin && <h2 className='text-xl mt-3'>Showing deleted entries, Click <button className="underline active:text-purple-500" onClick={() => setRecyclebin(!recyclebin)}>Non deleted entries</button> to get normal entries</h2>}
           {entries.length === 0 && !loading && <p className='mx-auto w-max text-xl mt-4'>No Entries found</p>}
-
-          {/*Put the scroll bar always on the bottom*/}
-
           <InfiniteScroll
             dataLength={entries.length}
             next={fetchMoreEntries}
             hasMore={entries.length < totalLength}
             loader={<></>}
-          // scrollableTarget={'body'}
           >
             {
               entries.map((entry, index) => {
@@ -269,7 +248,7 @@ function Entries({ loginInfo,
                 }
                 const update = helper.compareValue(new Date(entry.entry_date_time).getMonth());
 
-                return (<div key={Date.now() * Math.random()}>
+                return (<div key={Date.now() * Math.random() + index}>
                   {index !== 0 && !update && <div className="my-10 flex">
                     <p className="month-name text-3xl">{getMonthAndYear(entry.entry_date_time)}</p>
                     <span className="month-flex">

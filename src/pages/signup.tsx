@@ -1,9 +1,9 @@
-import Header from '@/components/Header'
+import Header from '@/components/Other/Header'
 import md5 from 'md5'
 import Link from 'next/link'
 import React from 'react'
 import { AlertType } from '.'
-import Alert from '@/components/Alert'
+import Alert from '@/components/Other/Alert'
 
 const Signup = () => {
   type FormFeilds = {

@@ -1,19 +1,31 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import applyMiddleware from "@/pages/api/middleware/applyMiddleware";
+import Entries from "./Models/EntrySchema";
+import Users from "./Models/UserSchema";
 type ResponseType = {
   success: boolean;
   error? : string;
   message: string;
+  entries?: any;
+  users?: any;
 }
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>):Promise<void> {
   try {
-    if(req.method === 'POST'){
-
-      return res.status(200).json({success: true, message: 'Hello world!'});
+    const reqMethod = 'GET'
+    if(req.method === reqMethod){
+      if(req.query.get=== 'entries'){
+        const entries = await Entries.find();
+        return res.status(200).json({success: true, message: 'Fetching entries was successful', entries});
+      }else if(req.query.get=== 'users'){
+        const users = await Users.find();
+        return res.status(200).json({success: true, message: 'Fetching users was successful', users});
+      }
+      return res.status(200).json({success: true, message:'Hello world!'});
     }else{
-      return res.status(400).json({success: false, error: "Bad Request", message: 'This route only supports POST method'});
+      return res.status(400).json({success: false, error: "Bad Request", message: `This route only supports ${reqMethod} method`});
     }
   } catch (error) {
+
     return res.status(500).json({success: false, error: 'Technical Error', message: 'Some technical error occured'});
   }
 }

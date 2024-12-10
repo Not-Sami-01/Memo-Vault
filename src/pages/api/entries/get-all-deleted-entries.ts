@@ -17,7 +17,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>):
       const userId = user.userId;
       const order = req.body.order;
       const entries: EntryType[] = await Entries.find({user_id: userId, deleted_at: { $ne: null }}).sort({entry_date_time: order});
-      return res.status(200).json({ success: true, message: "Successfully fetched all the entries",  entries });
+      return res.status(200).json({ success: true, message: "Successfully fetched all the deleted entries",  entries });
     } else {
       return res.status(400).json({ success: false, error: "Bad Request", message: 'This route only supports POST method' });
     }

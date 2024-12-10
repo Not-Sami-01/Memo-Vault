@@ -3,12 +3,16 @@ import applyMiddleware from "@/pages/api/middleware/applyMiddleware";
 import Users from "../Models/UserSchema";
 import MD5 from 'md5';
 import jwt from 'jsonwebtoken';
+import Entries from "../Models/EntrySchema";
 type ResponseType = {
   success: boolean;
   error?: string;
   message: string;
   token?: string;
   username?: string;
+  joinedAt?: Date | string;
+  totalEntries?: number;
+  trashedEntries?: number;
 }
 async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>): Promise<void> {
   try {
@@ -24,7 +28,9 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>):
       }
       if (user.username === username && MD5(password) === user.password) {
         const token = jwt.sign({ username, userId: user._id }, process.env.JWT_SECRET_KEY || '');
-        return res.status(200).json({ success: true, message: 'Congratulations! Signed in successfully!', token, username })
+        const entriesLength = await Entries.countDocuments({deleted_at: {$eq: null}})
+        const trashedEntriesLength = await Entries.countDocuments({deleted_at: {$ne: null}})
+        return res.status(200).json({ success: true, message: 'Congratulations! Signed in successfully!', token, username, joinedAt: user.created_at, totalEntries:entriesLength, trashedEntries:trashedEntriesLength })
       } else
         return res.status(401).json({ success: false, error: 'Invalid Credentials', message: 'Invalid username or password' });
     } else {

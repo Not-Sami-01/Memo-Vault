@@ -6,7 +6,7 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
-	--ck-editor-font-family: 'Lato', 'Arial', 'sans-serif';
+  --ck-editor-font-family:  'Arial', 'Lato', 'sans-serif','Helvetica';
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,67 +15,70 @@
     --foreground: #ededed;
   }
 }
-*{
+
+* {
   transition: all 0.1s;
-	/* word-spacing: .5px; */
 }
+
 body {
-  /* color: var(--foreground); */
   /* background: var(--background); */
-  /* font-family: Arial, Helvetica, sans-serif; */
 }
-.success-alert *{
-	color: green !important;
+
+.success-alert * {
+  color: green !important;
 }
+
 .card-text h1 {
-	font-size: large;
+  font-size: large;
 }
+
 .card-text p {
-	font-size: small;
+  font-size: small;
 }
-.month-name{
+
+.month-name {
   text-wrap: nowrap;
   margin: 0 10px;
 }
-.month-flex{
+
+.month-flex {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
   align-items: center;
 }
-.month-line{
-    width: 98%;
-    height: 1px;
-    border-bottom: 1px solid;
+
+.month-line {
+  width: 98%;
+  height: 1px;
+  border-bottom: 1px solid;
 }
 
-/* CkEditor Styles */
-
 @media print {
-	body {
-		margin: 0 !important;
-	}
+  body {
+    margin: 0 !important;
+  }
 }
 
 .main-container {
-	font-family: var(--ck-editor-font-family);
-	width: fit-content;
-	margin-left: auto;
-	margin-right: auto;
+  font-family: var(--ck-editor-font-family);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .ck-content {
-	font-family: var(--ck-editor-font-family);
-	line-height: 1.6;
-	word-break: break-word;
+  font-family: var(--ck-editor-font-family);
+  line-height: 1.6;
+  word-break: break-word;
 }
 
 .editor-container_classic-editor .editor-container__editor {
-	min-width: 795px;
-	max-width: 795px;
+  min-width: 795px;
+  max-width: 795px;
 }
-/* styles.css */
+
 .no-tailwind h1 {
   font-size: 2em; /* 32px */
 }
@@ -103,34 +106,37 @@ body {
 .no-tailwind p {
   font-size: 1em; /* 16px */
 }
-.no-tailwind{
-	transition: none;
-	color: black;
 
+.no-tailwind {
+  transition: none;
+  color: black;
 }
+
 .editor-container {
   max-width: 100% !important;
-  overflow: hidden; /* Or 'auto' if you want to allow scrolling */
+  overflow: hidden;
 }
 
-.ck-powered-by{
-	display: none !important;
+.ck-powered-by {
+  display: none !important;
 }
+
 .ck.ck-ai-form {
-	--ck-ai-form-content-height: 500px;
+  --ck-ai-form-content-height: 500px;
 }
+
 .ck-ai-assistant-ui_theme {
-	--ck-color-button-default-hover-background: hsl(0, 100%, 96%);
-	--ck-color-button-default-active-background: hsl(0,100%,96.3%);
-	--ck-color-button-on-background: hsl(0,100%,96.3%);
-	--ck-color-button-on-hover-background: hsl(0,60%,92.2%);
-	--ck-color-button-on-active-background: hsl(0,100%,96.3%);
-	--ck-color-button-on-disabled-background: hsl(0,100%,96.3%);
-	--ck-color-button-on-color: hsl(0,59.2%,52%);
-	--ck-color-button-action-background: hsl(0,59.2%,52%);
-	--ck-color-button-action-hover-background: hsl(0,58.9%,49.6%);
-	--ck-color-button-action-active-background: hsl(0,58.9%,49.6%);
-	--ck-color-button-action-disabled-background: hsl(0,59.3%,75.9%);
-	--ck-color-list-button-hover-background: hsl(0,100%,96.3%);
-	--ck-color-ai-selection: hsl(0,60%,90%);
+  --ck-color-button-default-hover-background: hsl(0, 100%, 96%);
+  --ck-color-button-default-active-background: hsl(0,100%,96.3%);
+  --ck-color-button-on-background: hsl(0,100%,96.3%);
+  --ck-color-button-on-hover-background: hsl(0,60%,92.2%);
+  --ck-color-button-on-active-background: hsl(0,100%,96.3%);
+  --ck-color-button-on-disabled-background: hsl(0,100%,96.3%);
+  --ck-color-button-on-color: hsl(0,59.2%,52%);
+  --ck-color-button-action-background: hsl(0,59.2%,52%);
+  --ck-color-button-action-hover-background: hsl(0,58.9%,49.6%);
+  --ck-color-button-action-active-background: hsl(0,58.9%,49.6%);
+  --ck-color-button-action-disabled-background: hsl(0,59.3%,75.9%);
+  --ck-color-list-button-hover-background: hsl(0,100%,96.3%);
+  --ck-color-ai-selection: hsl(0,60%,90%);
 }

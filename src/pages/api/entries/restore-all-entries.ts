@@ -11,16 +11,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ResponseType>):
   try {
     if(req.method === 'POST'){
       const userId = req.body.user.userId;
-      const _id = req.body.entryId;
-      let entry: any | null = await Entries.findById(_id);
-      if(!entry){
-        return res.status(404).json({success: false, error: 'Entry not found', message: 'The entry you are trying to update does not exist'});
-      }
-      if(entry.user_id != userId){
-        return res.status(401).json({success: false, error: 'Authorization Revoked', message: 'Authorization revoked! Please login again'});
-      }
-      await entry.softDelete(Date.now());
-      return res.status(200).json({success: true, message: 'Entry is temporarily deleted, you can still restore it from recyclebin!'});
+      await Entries.updateMany({user_id: userId, deleted_at: {$ne: null}}, {$set:{deleted_at: null}});
+      return res.status(200).json({success: true, message: 'All Entries restored successfully!'});
     }else{
       return res.status(400).json({success: false, error: "Bad Request", message: 'This route only supports POST method'});
     }

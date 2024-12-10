@@ -2,8 +2,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
-import { LoginInfoType } from '../pages';
-export default function Header({ pos = false, loginInfo = null, clearData = () => { } }: { pos: boolean | number; loginInfo?: LoginInfoType | null; clearData?: () => void }) {
+import { LoginInfoType } from '../../pages';
+export default function Header({ pos = false, loginInfo = null, clearData = () => { }, loading, setLoginInfo = () => { } }: { pos?: boolean | number; loading?:boolean; loginInfo?: LoginInfoType | null; clearData?: () => void; setLoginInfo?: React.Dispatch<React.SetStateAction<LoginInfoType>> }) {
+  const a = 'Hello y na'
   const [darkMode, setDarkMode] = React.useState<boolean>(false);
   const [dropdown, setDropdown] = React.useState<boolean>(false);
 
@@ -24,9 +25,22 @@ export default function Header({ pos = false, loginInfo = null, clearData = () =
       document.documentElement.classList.remove('dark');
     }
   };
+  React.useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (dropdown && !target.closest('nav')) {
+        setDropdown(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [dropdown]);
+
   const showLoginSignup = !loginInfo?.loggedIn && true;
   const navLi = 'mx-4 text-sm transition-all md:text-base hover:text-green-500 transition-all cursor-pointer text-white flex items-center';
-  const navLiDropdown = 'justify-center mx-4 text-sm transition-all md:text-base cursor-pointer dark:text-white flex p-1 items-center dark:bg-gray-700 bg-gray-200 m-1 rounded active:bg-gray-400 transition-none';
+  const navLiDropdown = 'justify-center mx-4 text-sm transition-all md:text-base cursor-pointer dark:text-white flex p-1 items-center dark:bg-gray-700 bg-gray-200 m-1 rounded active:bg-gray-400 dark:active:bg-gray-800 transition-none';
 
   // return <nav className={'z-10 bg-black w-full dark:bg-opacity-100 bg-opacity-50 flex justify-between top-0 left-0 ' + (pos ? 'sticky':'md:fixed')}>
   return <nav className={(pos === -1 ? '!relative ' : '') + 'z-20 bg-black w-full dark:bg-opacity-100 bg-opacity-50 flex justify-between top-0 left-0 dark:border-b-2 border-b-2 dark:border-gray-100 border-transparent ' + (pos === false ? 'fixed dark:sticky' : 'sticky')}>
@@ -50,9 +64,11 @@ export default function Header({ pos = false, loginInfo = null, clearData = () =
           <li className={navLi}>
             <Link legacyBehavior href="/signup">Sign Up</Link>
           </li></> :
-          <li className={navLi}>
+          <><li className={navLi}>
             <button onClick={clearData}>Logout</button>
-          </li>
+          </li><li className={navLi}>
+              <button disabled={loading} onClick={() => setLoginInfo(loginInfo => { return { ...loginInfo, currentPage: 'setting' } })}>Setting</button>
+            </li></>
         }
       </ul>
     </div>
@@ -111,9 +127,12 @@ export default function Header({ pos = false, loginInfo = null, clearData = () =
           <Link legacyBehavior href="/signup">Sign Up</Link>
         </li></>
         :
-        <li className={navLiDropdown}>
-          <button onClick={clearData}>Logout</button>
-        </li>}
+        <><li className={navLiDropdown}>
+          <button onClick={() => setLoginInfo(loginInfo => { return { ...loginInfo, currentPage: 'setting' } })} >Settings</button>
+        </li><li className={navLiDropdown}>
+            <button onClick={clearData}>Logout</button>
+          </li></>
+      }
       <li className={'flex items-center hover:items-start transition-all cursor-pointer select-none '}>
         <label className="inline-flex scale-50 items-center relative cursor-pointer ">
           <input checked={darkMode} onChange={changeDarkMode} className="peer hidden" id="toggle" type="checkbox" />

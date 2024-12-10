@@ -11,15 +11,24 @@ export type EntryType = {
   updated_at: string | null;
 }
 
-export function formatDate(date: any) {
-  const d = new Date(date);
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  const hours = String(d.getHours()).padStart(2, '0');
-  const minutes = String(d.getMinutes()).padStart(2, '0');
-  const seconds = String(d.getSeconds()).padStart(2, '0');
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+export function formatDate(d: any) {
+  const date = new Date(d);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  const seconds = String(date.getSeconds()).padStart(2, '0');
+  const milliseconds = String(date.getUTCMilliseconds()).padStart(3, '0');
+  const timezoneOffset = date.getTimezoneOffset();
+  const sign = timezoneOffset > 0 ? '-' : '+';
+  const absOffset = Math.abs(timezoneOffset);
+  const offsetHours = String(Math.floor(absOffset / 60)).padStart(2, '0');
+  const offsetMinutes = String(absOffset % 60).padStart(2, '0');
+  const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}${sign}${offsetHours}:${offsetMinutes}`;
+
+  return formattedDate;
+  // return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 export function getSoftDeleteDate() {
   const date = new Date(Date.now());
@@ -36,11 +45,9 @@ export function getSoftDeleteDate() {
   const offsetHours = String(Math.floor(absOffset / 60)).padStart(2, '0');
   const offsetMinutes = String(absOffset % 60).padStart(2, '0');
   const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}${sign}${offsetHours}:${offsetMinutes}`;
-  
+
   return formattedDate;
 }
-
-
 
 const EntrySchema = new Schema<EntryType>({
   tag: {
@@ -73,8 +80,8 @@ const EntrySchema = new Schema<EntryType>({
   }
 });
 
-EntrySchema.methods.softDelete = function () {
-  this.deleted_at = getSoftDeleteDate();
+EntrySchema.methods.softDelete = function (date: Date) {
+  this.deleted_at = formatDate(date);
   return this.save();
 };
 

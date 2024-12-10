@@ -24,9 +24,9 @@ const ExportDataModal = ({
     e.preventDefault();
     setExportDataFormat(dataFormat);
   }
-  useEffect(()=>{
+  useEffect(() => {
     setDataFormat(exportDataFormat);
-  },[])
+  }, [])
   return (
     <>{modal && <div className="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
       <div className="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
@@ -46,13 +46,10 @@ const ExportDataModal = ({
                     <p className="text-base text-gray-700 dark:text-gray-200">In which format do you want to export your data:</p>
                     <ul className=''>
                       <li className='text-gray-700 dark:text-gray-200'>
-                        <input className='cursor-pointer' onChange={handleChange} type="radio" name='exportFormat' value={1}/> JSON format
+                        <input className='cursor-pointer' onChange={handleChange} type="radio" name='exportFormat' value={1} /> JSON format
                       </li>
                       <li className='text-gray-700 dark:text-gray-200'>
-                        <input className='cursor-pointer' onChange={handleChange} type="radio" name='exportFormat' value={2}/> HTML format
-                      </li>
-                      <li className='text-gray-700 dark:text-gray-200'>
-                        <input className='cursor-pointer' onChange={handleChange} type="radio" name='exportFormat' value={3}/> PDF format
+                        <input className='cursor-pointer' onChange={handleChange} type="radio" name='exportFormat' value={2} /> HTML format
                       </li>
                     </ul>
                   </div>
